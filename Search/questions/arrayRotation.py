@@ -71,8 +71,38 @@ class Rotation:
                     high = mid - 1
 
 
-    def handle_repeating_numbers(self):
-        pass
+    def handle_reapeating_number(self):
+        low = 0
+        high = len(self.arr) - 1
+
+        while low <= high:
+            mid = (low + high) // 2
+            next_index = (mid + 1) % len(self.arr)
+            prev_index = (mid - 1) % len(self.arr)
+
+            if self.arr[mid] < self.arr[next_index] and self.arr[mid] < self.arr[prev_index]:
+                return mid
+
+            # If the elements at mid, low, and high are equal, we can't determine which half to search
+            # In this case, we decrement high and increment low to exclude the duplicates
+            if self.arr[mid] == self.arr[low] == self.arr[high]:
+                high -= 1
+                low += 1
+            # If the element at mid is equal to the element at high, search in the left half
+            elif self.arr[mid] == self.arr[high]:
+                high = mid - 1
+            # If the element at mid is equal to the element at low, search in the right half
+            elif self.arr[mid] == self.arr[low]:
+                low = mid + 1
+            # If the element at mid is less than the element at high, search in the left half
+            elif self.arr[mid] < self.arr[high]:
+                high = mid - 1
+            # Otherwise, search in the right half
+            else:
+                low = mid + 1
+
+        return 0
+
 
 
 # Example usage
@@ -84,30 +114,15 @@ rotations = rotation.count_rotation_linear()
 print(rotations)  # Output: 4
 print(rotation.search_in_rotated_array(3))
 
+##for duplicates 
+duplicates = [4, 5, 6, 6, 6, 9, 0, 2, 3, 4]
+duplicates_rotation = Rotation(duplicates)
+print(duplicates_rotation.handle_reapeating_number())
+
+
+
+
+
 '''
-Certainly! Let me clarify the statement.
-
-In the given problem, we start with a sorted list of numbers. When we perform a rotation on this sorted list,
-we remove the last element from the list and place it before the first element. This rotation operation shifts 
-all the elements in the list to the right, and the last element becomes the new first element.
-
-For example, if we start with the sorted list `[1, 2, 3, 4, 5]` and perform one rotation,
-it becomes `[5, 1, 2, 3, 4]`. If we perform two rotations, it becomes `[4, 5, 1, 2, 3]`, and so on.
-
-The goal of the problem is to determine the minimum number of times the original sorted list was rotated to obtain the given rotated list.
-
-Now, here's the key insight: When we rotate a sorted list, the smallest element in the original sorted 
-list moves to the beginning of the rotated list.
-
-For example, consider the original sorted list `[0, 2, 3, 4, 5, 6, 9]`. If we rotate it three times,
- it becomes `[5, 6, 9, 0, 2, 3, 4]`. Notice that the smallest element, `0`, is now at the 3rd index of the rotated list.
-
-Based on this observation, we can determine the minimum number of rotations by finding the index of the smallest element 
-in the rotated list. The index of the smallest element corresponds to the number of rotations performed on the original sorted list.
-
-In the implementation I provided earlier, the condition `self.arr[mid] < self.arr[next_index] and self.arr[mid] < self.arr[prev_index]` checks if the element at the middle index (`mid`) is smaller than both its next element (`next_index`) and previous element (`prev_index`). If this condition is true, it means that the element at `mid` is the smallest element in the rotated list. Therefore, we return `mid` as the number of rotations.
-
-By finding the index of the smallest element, we are effectively determining how many times the original sorted list was rotated to obtain the given rotated list.
-
-I hope this clarifies the context and the reasoning behind finding the index of the smallest element to determine the number of rotations.
+to count just try to find the index of the smallest element in the array
 '''

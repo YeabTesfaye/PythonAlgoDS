@@ -35,12 +35,22 @@ class Rotation:
                 # Otherwise, search in the right half
                 low = mid + 1
         return 0  
+    def count_rotation_linear(self):
+        position = 0
+
+        while position < len(self.arr):
+            if position > 0 and self.arr[position] < self.arr[position - 1]:
+                return position
+            position += 1
+        
+        return -1
 
 # Example usage
 arr = [4,5, 6, 9, 0, 2, 3]
 rotation = Rotation(arr)
 rotations = rotation.count_rotation()
-print(rotations)  # Output: 3
+rotations = rotation.count_rotation_linear()
+print(rotations)  # Output: 4
 
 
 '''

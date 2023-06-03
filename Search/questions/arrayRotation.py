@@ -45,13 +45,44 @@ class Rotation:
         
         return -1
 
+    def search_in_rotated_array(self, target):
+
+        low,high = 0,len(self.arr) - 1
+
+        while low <= high:
+            mid = (low+high)// 2
+
+            if self.arr[mid] == target:
+                return mid
+            
+            # If the left half is sorted 
+            if self.arr[low] <= self.arr[mid]:
+                # Check if the target is in the left half
+                if self.arr[low]<=target<=self.arr[mid]:
+                    high = mid - 1
+                else:
+                    low = mid + 1
+                # If the right half is sorted
+            else:
+                # Check if the target is in the right half
+                if self.arr[mid] <= target <= self.arr[high]:
+                    low = mid + 1
+                else:
+                    high = mid - 1
+
+
+    def handle_repeating_numbers(self):
+        pass
+
+
 # Example usage
 arr = [4,5, 6, 9, 0, 2, 3]
+arr=[1,3]
 rotation = Rotation(arr)
 rotations = rotation.count_rotation()
 rotations = rotation.count_rotation_linear()
 print(rotations)  # Output: 4
-
+print(rotation.search_in_rotated_array(3))
 
 '''
 Certainly! Let me clarify the statement.

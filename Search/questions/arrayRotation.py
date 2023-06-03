@@ -45,6 +45,26 @@ class Rotation:
         
         return -1
 
+    def count_rotation_recursive(self):
+        def condition(mid):
+            next_index = (mid + 1) % len(self.arr)
+            prev_index = (mid - 1) % len(self.arr)
+            return (
+                self.arr[mid] < self.arr[next_index]
+                and self.arr[mid] < self.arr[prev_index]
+            )
+        def binary_search(low, high, condition):
+            while low <= high:
+                mid = (low + high) // 2
+                if condition(mid):
+                    return mid
+                elif self.arr[mid] < self.arr[high]:
+                    high = mid - 1
+                else:
+                    low = mid + 1
+            return 0
+        return binary_search(0, len(self.arr) - 1, condition)
+
     def search_in_rotated_array(self, target):
 
         low,high = 0,len(self.arr) - 1
@@ -107,17 +127,17 @@ class Rotation:
 
 # Example usage
 arr = [4,5, 6, 9, 0, 2, 3]
-arr=[1,3]
 rotation = Rotation(arr)
 rotations = rotation.count_rotation()
 rotations = rotation.count_rotation_linear()
+rotations = rotation.count_rotation_recursive()
 print(rotations)  # Output: 4
 print(rotation.search_in_rotated_array(3))
 
 ##for duplicates 
 duplicates = [4, 5, 6, 6, 6, 9, 0, 2, 3, 4]
 duplicates_rotation = Rotation(duplicates)
-print(duplicates_rotation.handle_reapeating_number())
+# print(duplicates_rotation.handle_reapeating_number())
 
 
 

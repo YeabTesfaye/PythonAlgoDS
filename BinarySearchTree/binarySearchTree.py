@@ -61,7 +61,20 @@ class BinarySearchTree:
         while node.left:
             node = node.left
         return node.value
-
+     #if key exist it will update else it will insert 
+     # new node in the BST   
+    def update(self,key,target):
+        node = self.search(key)
+        if node is not None:
+            node.value = target
+        else:
+            node = self.insert(target)   
+    #check if the BST is balanced 
+    def is_balanced(self,node):
+        if self.root is None:
+            return True
+        balanced_l, height_l = is_balanced(self)
+        return balanced,hight 
     def inorder_traversal(self):
         result = []
         self._inorder_recursive(self.root, result)
@@ -109,14 +122,38 @@ bst.insert(4)
 bst.insert(7)
 bst.insert(13)
 bst.delete(13)
+bst.update(70, 9)
 isExist = bst.search(13)
-
 print(bool(isExist))
 # print("Inorder traversal:")
-# print(bst.inorder_traversal())
+#inorder Traversal always give a sorted list 
+print(bst.inorder_traversal())
 
 # print("Preorder traversal:")
 # print(bst.preorder_traversal())
 
 # print("Postorder traversal:")
 # print(bst.postorder_traversal())
+
+
+# Time complexity analysis:
+# - Insertion: O(log n) on average for a balanced tree, O(n) in the worst case for an unbalanced tree.
+# - Deletion: O(log n) on average for a balanced tree, O(n) in the worst case for an unbalanced tree.
+# - Search: O(log n) on average for a balanced tree, O(n) in the worst case for an unbalanced tree.
+# - Update: O(log n) on average fro a balancd tree, O(n) in the worst case for an  unbalanced tree
+# - Inorder Traversal: O(n), as it visits each node once.
+# - Preorder Traversal: O(n), as it visits each node once.
+# - Postorder Traversal: O(n), as it visits each node once.
+
+
+#Definition for balanced tree 
+
+'''
+A balanced tree refers to a tree in which the heights of its left and right subtrees are roughly equal
+or differ by at most a constant factor. In other words,the tree is structured in a way that minimizes the height and 
+ensures that the nodes are evenly distributed across the tree.
+
+Balanced trees are important because they provide efficient search,
+insertion, and deletion operations. When a tree is balanced, the height of the tree is logarithmic in the
+number of nodes, resulting in faster operations compared to unbalanced trees.
+ '''

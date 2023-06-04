@@ -61,20 +61,39 @@ class BinarySearchTree:
         while node.left:
             node = node.left
         return node.value
-     #if key exist it will update else it will insert 
-     # new node in the BST   
-    def update(self,key,target):
+     # if key exist it will update else it will insert
+     # new node in the BST
+
+    def update(self, key, target):
         node = self.search(key)
         if node is not None:
             node.value = target
         else:
-            node = self.insert(target)   
-    #check if the BST is balanced 
-    def is_balanced(self,node):
-        if self.root is None:
+            node = self.insert(target)
+    # check if the BST is balanced
+
+    def is_balanced(self):
+        return self._is_blanced_recursive(self.root)
+
+    def _is_blanced_recursive(self, node):
+        if node is None:
             return True
-        balanced_l, height_l = is_balanced(self)
-        return balanced,hight 
+        left_hight = self._get_hight(node.left)
+        right_hight = self._get_hight(node.right)
+        if abs(left_hight - right_hight) >= 1 and \
+                self._is_blanced_recursive(node.left) and \
+                self._is_blanced_recursive(node.right):
+            return True
+        return False
+
+    def _get_hight(self, node):
+        if node is None:
+            return 0
+        left_hight = self._get_hight(node.left)
+        right_hight = self._get_hight(node.right)
+
+        return max(left_hight, right_hight) + 1
+
     def inorder_traversal(self):
         result = []
         self._inorder_recursive(self.root, result)
@@ -126,9 +145,9 @@ bst.update(70, 9)
 isExist = bst.search(13)
 print(bool(isExist))
 # print("Inorder traversal:")
-#inorder Traversal always give a sorted list 
+# inorder Traversal always give a sorted list
 print(bst.inorder_traversal())
-
+print(bst.is_balanced())
 # print("Preorder traversal:")
 # print(bst.preorder_traversal())
 
@@ -146,7 +165,7 @@ print(bst.inorder_traversal())
 # - Postorder Traversal: O(n), as it visits each node once.
 
 
-#Definition for balanced tree 
+# Definition for balanced tree
 
 '''
 A balanced tree refers to a tree in which the heights of its left and right subtrees are roughly equal

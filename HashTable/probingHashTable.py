@@ -80,14 +80,3 @@ print(probing_table.find('silent'))
 probing_table.delete('listen')
 #check the value
 print(probing_table.find('listen') == 99 )
-
-
-
-
-
-
-
-
-
-
-

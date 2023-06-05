@@ -36,6 +36,13 @@ class BasicHashTable:
 
         self.data_list[index] = (key,value)
     
+    def delete(self,key):
+        index = get_index(self.data_list, key)
+        kv = self.data_list[index]
+
+        if kv and kv[0] == key:
+            self.data_list[index] = None
+    
     def list_all(self):
         return [kv[0] for kv in self.data_list if not kv ]
 
@@ -43,7 +50,9 @@ class BasicHashTable:
 
 
 basic_table = BasicHashTable(max_size=MAX_HASH_TABLE_SIZE)
-print(len(basic_table.data_list) == 1024)
+# print(len(basic_table.data_list) == 1024)
 basic_table.insert('Aakash', '9999999999')
 basic_table.insert('Hemanth', '8888888888')
-print(basic_table.find("Aakash", '9999999999'))
+print(bool((basic_table.find("Aakash", '9999999999'))))
+basic_table.delete('Aakash')
+print(bool((basic_table.find("Aakash", '9999999999'))))
